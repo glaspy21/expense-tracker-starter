@@ -14,9 +14,12 @@ npm run dev       # Vite dev server at http://localhost:5173
 npm run build     # production build to dist/
 npm run preview   # serve the built output
 npm run lint      # eslint .
+npm test          # vitest run (jsdom + React Testing Library)
 ```
 
-There is no test framework configured, so there is no test command.
+Tests live next to the components as `src/*.test.jsx` (setup in `src/setupTests.js`, config in the `test` key of `vite.config.js`). Test files import `describe`/`it`/`expect` from `vitest` explicitly rather than using globals, so ESLint needs no extra config.
+
+The project skill `/deploy` (`.claude/skills/deploy/SKILL.md`) runs `npm test`, then `npm run build`, then pushes HEAD to the `staging` branch on `origin`. It only runs when invoked by the user.
 
 Lint notes (`eslint.config.js`): `no-unused-vars` is an error, but names starting with an uppercase letter or `_` are exempt. React Hooks and react-refresh (Vite) rules are enabled.
 
